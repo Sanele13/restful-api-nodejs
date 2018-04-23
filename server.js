@@ -17,7 +17,7 @@ var heroes=[];/* = [
 ];*/
 // Add headers
 app.use(function (req, res, next) {
-    //Allow to connect http://localhost:4200 to access
+    //Allow http://localhost:4200 to access
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     //Allow these methods
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
