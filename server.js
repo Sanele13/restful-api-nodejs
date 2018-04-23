@@ -1,8 +1,9 @@
 //import required module
 var app = require('express')();
 var http = require('http').Server(app);
+var mysql = require('mysql');
 
-const heroes = [
+var heroes=[];/* = [
     { id: 11, name: 'Mr. Nice' },
     { id: 12, name: 'Narco' },
     { id: 13, name: 'Bombasto' },
@@ -13,7 +14,7 @@ const heroes = [
     { id: 18, name: 'Dr IQ' },
     { id: 19, name: 'Magma' },
     { id: 20, name: 'Tornado' }
-];
+];*/
 // Add headers
 app.use(function (req, res, next) {
     //Allow to connect http://localhost:4200 to access
@@ -24,6 +25,23 @@ app.use(function (req, res, next) {
     next();
 });
 
+//Get the data from the database
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "mydb"
+});
+//console.log(heroes[0]);
+con.connect(function(err) {
+    if (err) throw err;
+    con.query("SELECT * FROM heroes", function (err, result, fields) {
+        if (err) throw err;
+        heroes = result;
+        console.log(result);
+    });
+});
+console.log(heroes[0]);
 app.get('/api/heroes', function(req, res){
     res.send(heroes);
 });
